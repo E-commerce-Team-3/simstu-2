@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page Design</title>
+    <link rel="stylesheet" href="productpage.css">
+</head>
+<body>
+    <nav id="navbar">
+        <div id="logo">
+            <img src="logo.jpg" alt="">
+        </div>
+
+        <ul>
+            <li class="itemd"><a>Men</a> 
+            <div id="dropdown"><a href="#">Shirts</a>
+                <a href="#">Bottoms</a>
+                <a href="#">Accessories</a></div>
+            </li>
+            <li class="itemd"><a>Women</a>
+                <div id="dropdown"><a href="#">Shirts</a>
+                    <a href="#">Bottoms</a>
+                    <a href="#">Accessories</a></div></li>
+            <li class="item"><a>Contact Us</a></li>
+        </ul>
+
+        <!-- <div id="right">
+            right
+        </div> -->
+        <Div id="search">
+            <form action="#">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa-search"></i><img src="magglass.png" alt=""></button>
+              </form>
+        </Div>
+    </nav>
+<div class="container">
+    <div class="product">
+        <div class="gallery">
+            <img src="images/image1.png">
+        </div>
+        <div class="details">
+            <h2>Slim button-down wrinkle resistant performance dress shirt</h2>
+            <h3>$59.9</h3>
+            <p>Our performance dress shirt is easy care, so that you can look sharp with little effort. Wear this shirt from work days to weekends with chinos or jeans.</p>
+            <form>
+                <div class="size-select">
+                    <p>Size</p>
+                    <lable for="extra-small">
+                        <input type ="radio" name="size" id="extra-small">
+                        <span>XS</span>
+                    </lable>
+                    <lable for="small">
+                        <input type ="radio" name="size" id="small">
+                        <span>S</span>
+                    </lable>
+                    <lable for="medium">
+                        <input type ="radio" name="size" id="medium">
+                        <span>M</span>
+                    </lable>
+                    <lable for="large">
+                        <input type ="radio" name="size" id="large">
+                        <span>L</span>
+                    </lable>
+                    <lable for="extra-large">
+                        <input type ="radio" name="size" id="extra-large">
+                        <span>XL</span>
+                    </lable>
+                    <lable for="xx-large">
+                        <input type ="radio" name="size" id="xx-large">
+                        <span>XXL</span>
+                    </lable>
+                </div>
+                <div class="colour-select">
+                    <p>Colour</p>
+                    <label for="black">
+                        <input type="radio" name="colour" id="black">
+                        <span class="colour-1"></span>
+                    </label>
+                    <label for="red">
+                        <input type="radio" name="colour" id="red">
+                        <span class="colour-2"></span>
+                    </label>
+                    <label for="blue">
+                        <input type="radio" name="colour" id="blue">
+                        <span class="colour-3"></span>
+                    </label>
+                    <label for="yellow">
+                        <input type="radio" name="colour" id="yellow">
+                        <span class="colour-4"></span>
+                    </label>
+                </div>
+                <div class="quantity-select">
+                    <p>Quantity</p>
+                    <input type="number" value="1">
+                </div>
+                <button class="buy">Buy Now</button>
+                <button class="wishlist">Wishlist</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
