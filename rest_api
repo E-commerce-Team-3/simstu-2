@@ -1,0 +1,166 @@
+from flask import Flask,request,jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from sqlalchemy.types import Unicode
+
+import os
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://unbxd:12345@localhost:5432/db2'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+db = SQLAlchemy(app)
+ma=Marshmallow(app)
+
+class website_data1(db.Model):
+    color = db.Column(db.String)
+    categoryType = db.Column(db.String)
+    productUrl = db.Column(db.String)
+    availability =db.Column(db.String)
+    size =db.Column(db.String)
+    category =db.Column(db.String)
+    productDescription =db.Column(db.String)
+    catlevel2Name =db.Column(db.String)
+    title =db.Column(db.String)
+    sku =db.Column(db.String)
+    price =db.Column(db.String)
+    catlevel3Name =db.Column(db.String)
+    catlevel1Name =db.Column(db.String)
+    name =db.Column(db.String)
+    gender=db.Column(db.String)
+    catlevel4Name=db.Column(db.String)
+    uniqueId=db.Column(db.String,primary_key=True)
+
+    def __init__(self,color,categoryType,productUrl,availability,size,category,productDescription,catlevel2Name,title,sku,price,catlevel3Name,name,gender,catlevel4Name,uniqueId):       
+      self.color= db.color
+      self.categoryType = db.categoryType
+      self.productUrl= db.productUrl
+      self.availability = db.availability
+      self.size = db.size
+      self.category = db.category
+      self.productDescription= db.productDescription
+      self.catlevel2Name = db.catlevel2Name
+      self.title = db.title
+      self.sku = db.sku
+      self.price = db.price
+      self.catlevel3Name = db.catlevel3Name
+      self.catlevel1Name = db.catlevel1Name
+      self.name = db.name
+      self.gender = db.gender
+      self.catlevel4Name = db.catlevel4Name
+      self.uniqueId = db.uniqueId
+
+class ProdSchema(ma.Schema):
+    class Meta:
+        fields=('uniqueid','name','db.title','category','price','availability','catlevel1Name')
+        #fields=('color','categoryType','productUrl','availability','size','category','productDescription','catlevel2Name','title','sku','price','catlevel3Name','name','gender','catlevel4Name','uniqueId')
+product_schema = ProdSchema()
+products_schema = ProdSchema(many=True)
+
+@app.route('/product',methods=['POST'])
+def add_product():
+    color = request.json['color']
+    categoryType = request.json['categoryType']
+    productUrl = request.json['productUrl']
+    availability =request.json['availability']
+    size =request.json['size']
+    category =request.json['category']
+    productDescription =request.json['productDescription']
+    catlevel2Name =request.json['catlevel2Name']
+    title =request.json['title']
+    sku =request.json['sku']
+    price =request.json['price']
+    catlevel3Name =request.json['catlevel3Name']
+    catlevel1Name =request.json['catlevel1Name']
+    name =request.json['name']
+    gender=request.json['gender']
+    catlevel4Name=request.json['catlevel4Name']
+    uniqueId=request.json['uniqueId']
+
+    new_product=website_data1(color,categoryType,productUrl,availability,size,category,productDescription,catlevel2Name,title,sku,price,catlevel3Name,name,gender,catlevel4Name,uniqueId)
+    db.session.add(new_product)
+    db.session.commit()
+
+    return product_schema.jsonify(new_product)
+
+#for obtaining products from product id
+@app.route('/product/<uniqueId>',methods=['GET'])
+def get_product(uniqueId):
+    product=website_data1.query.get(uniqueId)
+    return product_schema.jsonify(product)
+
+#for obtaining products by catlevel1name
+@app.route('/productgroup/<catname>',methods=['GET'])
+def get_products(catname):
+    products=website_data1.query.filter_by(catlevel1Name=catname).all()
+    return products_schema.jsonify(products)
+
+#for sorting in ascending order
+@app.route('/productascending',methods=['GET'])
+def get_ascending_by_price():
+    products=website_data1.query.order_by(db.cast(website_data1.price,db.Float).asc()).all()
+    result=products_schema.dump(products)
+    return products_schema.jsonify(products)
+
+#for sorting in descending order
+@app.route('/productdescending',methods=['GET'])
+def get_descending_by_price():
+    products=website_data1.query.order_by(db.cast(website_data1.price,db.Float).desc()).all()
+    result=products_schema.dump(products)
+    return products_schema.jsonify(products)
+
+#for sub category within category
+@app.route('/productgroup2/<catname>/<cat2name>',methods=['GET'])
+def get_products2(catname,cat2name):
+    products=website_data1.query.filter_by (catlevel1Name=catname, catlevel2Name = cat2name).all()
+    return products_schema.jsonify(products)
+#search only for subcategory
+@app.route('/productgroup1/<catname2>',methods=['GET'])
+def get_products1(catname2):
+    products=website_data1.query.filter_by(catlevel2Name=catname2).all()
+    return products_schema.jsonify(products)
+
+
+@app.route('/product,<id>',methods=['PUT'])
+def update_product(uniqueId):
+
+    color = request.json['color']
+    categoryType = request.json['categoryType']
+    productUrl = request.json['productUrl']
+    availability =request.json['availability']
+    size =request.json['size']
+    category =request.json['category']
+    productDescription =request.json['productDescription']
+    catlevel2Name =request.json['catlevel2Name']
+    title =request.json['title']
+    sku =request.json['sku']
+    price =request.json['price']
+    catlevel3Name =request.json['catlevel3Name']
+    catlevel1Name =request.json['catlevel1Name']
+    name =request.json['name']
+    gender=request.json['gender']
+    catlevel4Name=request.json['catlevel4Name']
+    uniqueId=request.json['uniqueId']
+
+    product=website_data1.query.get(uniqueId)
+    color = request.json['color']
+    categoryType = request.json['categoryType']
+    productUrl = request.json['productUrl']
+    availability =request.json['availability']
+    size =request.json['size']
+    category =request.json['category']
+    productDescription =request.json['productDescription']
+    catlevel2Name =request.json['catlevel2Name']
+    title =request.json['title']
+    sku =request.json['sku']
+    price =request.json['price']
+    catlevel3Name =request.json['catlevel3Name']
+    catlevel1Name =request.json['catlevel1Name']
+    name =request.json['name']
+    gender=request.json['gender']
+    catlevel4Name=request.json['catlevel4Name']
+    uniqueId=request.json['uniqueId']
+
+    db.session.commit()
+    return product_schema.jsonify(product)
+
+if __name__=='__main__':
+    app.run(debug=True)
