@@ -1,0 +1,195 @@
+
+      .carddes{
+  border: 2px solid red;
+}
+
+.cards-body{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+}
+.card{
+width: 350px;
+height:500px;
+cursor: pointer;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+border-radius: 10px;
+overflow: hidden;
+margin: 50px;
+float: left;
+border-radius: 10px;
+}
+.card:hover{
+  background-image: rgb(210, 173, 227);
+  border: 8px solid rgb(157, 51, 51);
+  border-color: #e1387e;
+  text-decoration: none;
+}
+.card img{
+  width: 100%;
+height: 80%;
+object-fit: cover;
+}
+.card_name{
+  font-size: 20px;
+font-weight: bold;
+font-family: Arial, Helvetica, sans-serif;
+color: #764ee3;
+margin-top: 10px;
+justify-content: center;
+text-align: center;
+
+}
+.card_price{
+  font-size: 18px;
+font-weight: bold;
+color: green;
+margin-top: 20px;
+justify-content: right;
+text-align: right;
+margin-right: 10px;
+
+}
+
+#second_section{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: left;
+        /* border: 2px solid red; */
+        margin: 0;
+    
+    }
+    
+    #second_section h1{
+        font-size: 6em;
+        margin-left: 100px;
+        margin-bottom: 10px;
+        position: absolute;
+        top: 300px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: oblique;
+        text-align: right;
+    
+    }
+    
+    #second_section h2{
+        font-size: 5em;
+        margin-left: 370px;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 450px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-weight: 400;
+        font-style: italic;
+      
+    }
+    
+
+
+
+.shopbutton {
+  background-image: linear-gradient(#42A1EC, #0070C9);
+  border: 1px solid #0077CC;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  direction: ltr;
+  display: block;
+  font-family: "SF Pro Text","SF Pro Icons","AOS Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -.022em;
+  line-height: 1.47059;
+  min-width: 30px;
+  overflow: visible;
+  padding: 4px 15px;
+  text-align: center;
+  /* vertical-align: baseline; */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.shopbutton:disabled {
+  cursor: default;
+  opacity: .3;
+}
+
+.shopbutton:hover {
+  background-image: linear-gradient(#51A9EE, #147BCD);
+  border-color: #1482D0;
+  text-decoration: none;
+}
+
+.shopbutton:active {
+  background-image: linear-gradient(#3D94D9, #0067B9);
+  border-color: #006DBC;
+  outline: none;
+}
+
+.shopbutton:focus {
+  box-shadow: rgba(131, 192, 253, 0.5) 0 0 0 3px;
+  outline: none;
+}
+    #second_section button{
+        width: 200px;
+        height:80px;
+        margin-left: 450px;
+        margin-top: 620px;
+        font-family: 'Times New Roman', Times, serif;
+        border-radius: 10px;
+        background-color: beige;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 5px;
+    }
+    
+    #second_section button:hover{
+        background-color: black;
+        color: white;
+    }
+    #second_section img{
+      position: absolute;
+      right: 50px;
+      top: 65px;
+      max-height: 750px;
+      
+      
+    }
+
+    
+    /* #second_section::before{
+        content:"";
+        position: absolute;
+        background: url('testimg.jpg');
+        
+        
+        height: 1080px;
+        width: 100%;
+        z-index: -2;
+        opacity: 0.9;
+    }
+   */
+    #second_section::before{
+      content:"";
+      position: absolute;
+      background: url('D:\1.Main folders\documents new\1.personnel docs\frens\sim\unbxd_website_ver4\fashion_img.jpg');
+      background-image: -moz-repeating-radial-gradient('D:\1.Main folders\documents new\1.personnel docs\frens\sim\unbxd_website_ver4\fashion_img.jpg');
+      max-width:700px;
+      max-height: 800px;
+      z-index: 10;
+      right: 20px;
+      top:100px;
+      opacity: 2;
+  }
+  .logo{
+    height: 50px;
+    width: 80px;
+  }
+
+
+    
