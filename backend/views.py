@@ -3,7 +3,7 @@ from flask import Flask,request,jsonify,redirect
 from sqlalchemy import select
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from .models import website_data1
+from .models import website_data
 from . import ma
 from django.shortcuts import render
 import psycopg2
@@ -24,7 +24,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import class_mapper
 from . import db
 from . import engine
-mapper=class_mapper(website_data1)
+mapper=class_mapper(website_data)
 test1=mapper.mapped_table
 
 
@@ -40,7 +40,7 @@ def home():
 
 
 def get_product_by_uniqueid(uniqueid):
-    query = select([website_data1.price, website_data1.name]).where(website_data1.uniqueId == uniqueid)
+    query = select([website_data.price, website_data.name]).where(website_data.uniqueId == uniqueid)
     result = db.session.execute(query).fetchone()
     if result:
         result=list(result)
@@ -157,9 +157,10 @@ def get_desc(uniqueid):
     details=[]
     for i in products:
         if i["uniqueId"]==uniqueid:
-            details={"id":i["uniqueId"],"image":i["productImage"],"name": i["title"], "price": i["price"],"color":i["color"],"size":i["size"],"category":i["categoryType"],"description":i["productDescription"]}
-    print(details)
-    return render_template("products.html",details=details)
+            details=[{"id":i["uniqueId"],"image":i["productImage"],"name": i["title"], "price": i["price"],"color":i["color"],"size":i["size"],"category":i["categoryType"],"description":i["productDescription"]}]
+    print('done')
+    # return render_template("products.html",details=details)
+    return details
 
 
 
@@ -190,4 +191,5 @@ def get_desc(uniqueid):
     # return jsonify(uniqueids)
 
     
+
 

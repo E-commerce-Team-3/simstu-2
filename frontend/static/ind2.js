@@ -20,7 +20,44 @@ function search() {
               `;
               card.addEventListener("click", function() {
                 const uniqueid = this.getAttribute("data-product-id");
-                window.location.href = "/product/"+uniqueid;
+                // window.location.href = "/product/"+uniqueid;
+                fetch(`/product/${uniqueid}`)
+                  .then(response=>response.json())
+                  .then(data=>{
+                    const prod_results=document.getElementById("prod_results");
+                    prod_results.innerHTML='';
+                    results.innerHTML='';
+                    data.forEach(details=>{
+                      const prod=document.createElement("div");
+                    prod.className="prod"
+                    document.body.appendChild(prod);
+                    prod.innerHTML=`<main class="container">
+                    <div class="left-column">
+                      <img data-image="red" class="active" src="${details.image}" alt="">
+                    </div>
+                  
+                    <div class="right-column">
+                   
+                      <!-- Product Description -->
+                      <div class="product-description">
+                        <span>${details.category}</span>
+                        <h1>${details.name}</h1>
+                        <p>${details.description}</p>
+                      </div>
+                  
+                     
+                      
+                      
+                      <div class="product-price">
+                        <span>${details.price}</span>
+                        <a href="#" class="cart-btn">Add to cart</a>
+                      </div>
+                    </div>
+                  </main>`
+
+                    })
+                    
+                  })
             });
               results.appendChild(card);
             });

@@ -6,15 +6,15 @@ from flask_marshmallow import Marshmallow
 from sqlalchemy.engine import result
 ma=Marshmallow()
 db=SQLAlchemy()
-from .models import website_data1,ProdSchema
+from .models import website_data,ProdSchema
 # DB_NAME='test1.db'
 
-engine = create_engine('postgresql://unbxd:12345@localhost:5432/db2')
+engine=create_engine('postgresql://postgres:12345@localhost:5432/test1')
 
 def create_app():
     app=Flask(__name__)
     app.config['SECRET_KEY']='thisisthekey'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://unbxd:12345@localhost:5432/db2'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:12345@localhost:5432/test1'
     db.init_app(app)
 
     from .views import views

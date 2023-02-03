@@ -2,7 +2,7 @@ from . import db,ma
 from sqlalchemy.orm import class_mapper
 
 
-class website_data1(db.Model):
+class website_data(db.Model):
     color = db.Column(db.String)
     categoryType = db.Column(db.String)
     productUrl = db.Column(db.String)
@@ -27,5 +27,5 @@ class ProdSchema(ma.Schema):
         #fields=('color','categoryType','productUrl','availability','size','category','productDescription','catlevel2Name','title','sku','price','catlevel3Name','name','gender','catlevel4Name','uniqueId')
 product_schema = ProdSchema()
 products_schema = ProdSchema(many=True)
-mapper=class_mapper(website_data1)
+mapper=class_mapper(website_data)
 test1=mapper.mapped_table
