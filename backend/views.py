@@ -80,29 +80,27 @@ def get_product_by_uniqueid(uniqueid):
 #             print(products)
 #     return render_template("search.html", products=products)
 
-
-
-
-
-
-
-
-
-
 @views.route("/search", methods=["GET","POST"])
 def submit_form():
     if request.method != "GET":
         redirect("base.html")
     query = request.args.get("query")
-    print('query recieved is ',query)
-    if query==None or (len(query))==0 :
+    pageQuery = request.args.get("page")
+    print('query recieved is ', query)
+    print('query recieved is ', pageQuery)
+    if query == None or (len(query)) == 0:
         redirect("products.html")
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json"
     }
-    url = f"https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q={query}&rows=10"
-    response = requests.get(url, headers=headers)
+    page = 1
+    pageSize = 10
+    if (pageQuery):
+        page = int(pageQuery)
+    start = (page - 1) * 10
+
+    url = f"https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q={query}&rows={pageSize}&start={start}"
     data = response.json()
     global products
     products = data.get("response", {}).get("products", [])
