@@ -194,12 +194,13 @@
   .cart-btn:hover {
     background-color: #64af3d;
   }
-  .color-button {
+.color-button {
         width: 25px;
         height: 25px;
         border-radius: 10px;
         display: inline-block;
         margin: 10px;
+  }
   </style>
   <title>Product Cards</title>
   
@@ -209,8 +210,12 @@
 
 
 <body>
-  <nav method="POST" class="navbar navbar-light" style="background-color: #e3f2fd ;">
-    <a class="navbar-brand" href="/">Logo</a>
+  <nav class="navbar navbar-light" style=" background-color: #000000; ">
+   <form method="POST">
+     <!-- form elements here -->
+   </form>
+  </nav>
+    <a class="navbar-brand" href="/">Simstu</a>
 
 
     <!-- <form method="POST" class="form-inline my-2 my-lg-0" id="searchmain" action="/search" method="POST">
@@ -245,6 +250,8 @@
             <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a>
          
             <a class="dropdown-item" id="men-hats" onclick="search2(this)">Hats</a>
+            <a class="dropdown-item" id="men-shoes" onclick="search2(this)">Shoes</a>
+
 
         </li>
 
@@ -294,16 +301,14 @@
       <div class="product-color">
         <span>Color</span>
  
-        <div class="color-choose">
-          {%for color in details.color%}
-          <button class="color-button" style="background-color:{{color}}"></button>
-          {%endfor%}
-          
-        </div>
-        
-      
+          <div class="color-choose">
+            {%for color in details.color%}
+             <button class="color-button" style="background-color:color"></button>
+            {%endfor%}
+          </div>
+      </div>
+      <!-- Add the color selection functionality here -->
 
-    </div>
 
     </div>
     <div class="cable-config">
