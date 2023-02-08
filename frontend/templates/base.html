@@ -42,7 +42,7 @@
     margin-top: 60px;
     }
     
-    .left-column img {
+    /* .left-column img {
     height: 100%;
     position: absolute;
     left: 0;
@@ -55,7 +55,7 @@
     
     .left-column img.active {
     opacity: 1;
-    }
+    } */
     
     /* Product Description */
     .product-description {
@@ -213,15 +213,42 @@
       /* margin-bottom: 80px;
       margin-right: -30px; */
     }
+    .pagebtn{
+      background-color: #83a6c1;
+      border-radius: 2px;
+      
+    }
+    .pagination {
+   position: absolute;
+   margin-top: auto;
+   align-items: center;
+   justify-content:end;
+   display: flex;
+}
+
+.pagebtn{
+  display: inline-block;
+    border: 1px solid #ff523b;
+    margin-left: 10px;
+     width: 40px;
+     height: 40px;text-align: center;
+     line-height: 40px;
+     cursor: pointer;
+}
+    .pagebtn:hover{
+      background: #555;
+      color: #fff;
+    }
+
       </style>
-   
+    
    
 </head>
 
 
 <body>
-    <nav method="POST" class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="/">Logo</a>
+    <nav method="POST" class="navbar navbar-light" style="background-color: #bd8bfd;">
+        <a class="navbar-brand" href="/">Simstu</a>
 
 
         <!-- <form method="POST" class="form-inline my-2 my-lg-0" id="searchmain" action="/search" method="POST">
@@ -255,10 +282,25 @@
                 Men
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" id="men-tshirt"  onclick="search2(this)">Tshirt</a>
+                <a class="dropdown-item" id="men-Shirts"  onclick="search2(this)">Shirts</a>  
+                <a class="dropdown-item" id="men-Tees & Polos" onclick="search2(this)">Tees & Polos</a> 
+                <a class="dropdown-item" id="men-Suits" onclick="search2(this)">Suits</a>  
+                <a class="dropdown-item" id="men-Shoes" onclick="search2(this)">Shoes</a>  
+                <a class="dropdown-item" id="men-Accessories" onclick="search2(this)">Accessories</a> 
+                <a class="dropdown-item" id="men-Pants" onclick="search2(this)">Pants</a> 
+                <a class="dropdown-item" id="men-Jackets & Coats" onclick="search2(this)">Jackets & Coats</a> 
+                <a class="dropdown-item" id="men-Underwear" onclick="search2(this)">Underwear</a> 
+                <a class="dropdown-item" id="men-Outerwear" onclick="search2(this)">Outerwear</a>  
+                <!-- <a class="dropdown-item" id="women-personal care" onclick="search2(this)">Grooming and Personal Care</a>
+                <a class="dropdown-item" id="men-outerwear" onclick="search2(this)">Outerwear</a>
+                <a class="dropdown-item" id="men-bottoms" onclick="search2(this)">Bottoms</a>
                 <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a>
-             
-                <a class="dropdown-item" id="men-hats" onclick="search2(this)">Hats</a>
+                <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a>
+                <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a>
+                <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a>
+                <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a>
+                <a class="dropdown-item" id="men-pants" onclick="search2(this)">Pants</a> -->
+
   
             </li>
 
@@ -267,11 +309,17 @@
                   Women
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" id="women-tshirt" onclick="search2(this)">Tshirt</a>
-                  <a class="dropdown-item" id="women-pants" onclick="search2(this)">Pants</a>
-                  
-                  <a class="dropdown-item" id="women-shoes" onclick="search2(this)">Shoes</a>
-                
+                  <a class="dropdown-item" id="women-Tops" onclick="search2(this)">Tops</a>
+                  <a class="dropdown-item" id="women-Bottoms" onclick="search2(this)">Bottoms</a>
+                  <a class="dropdown-item" id="women-Dresses & Jumpsuits" onclick="search2(this)">Dresses & Jumpsuits</a>
+                  <a class="dropdown-item" id="women-Shoes" onclick="search2(this)">Shoes</a>
+                  <a class="dropdown-item" id="women-Jewelry" onclick="search2(this)">Jewelry</a> 
+                  <a class="dropdown-item" id="women-Accessories" onclick="search2(this)">Accessories</a>
+                  <a class="dropdown-item" id="women-Home & Tech" onclick="search2(this)">Home & Tech</a> 
+                  <a class="dropdown-item" id="women-Beauty & Wellness" onclick="search2(this)">Beauty & Wellness</a>  
+                  <a class="dropdown-item" id="women-Sweaters" onclick="search2(this)">Sweaters</a> 
+                  <!-- <a class="dropdown-item" id="women-Shoes" onclick="search2(this)">Shoes</a> -->
+                  <!-- <a class="dropdown-item" id="women-Shoes" onclick="search2(this)">Shoes</a> -->                
               </li>
 
 
@@ -298,7 +346,7 @@
 
       <div id="results" class="cards-body"></div>
       <div id="prod_results"></div>
-      <h2>this is base itself</h2>
+      <!-- <h2>this is base itself</h2> -->
       <!-- <div id="productCards"></div> -->
 
       
@@ -357,6 +405,6 @@
     
     
     
-<div>this is end</div>
+<!-- <div>this is end</div> -->
 </body>
 </html>
