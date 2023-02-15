@@ -7,7 +7,7 @@ from sqlalchemy.engine import result
 ma=Marshmallow()
 db=SQLAlchemy()
 from .models import website_data2,ProdSchema
-# DB_NAME='test1.db's
+# DB_NAME='test1.db'
 
 engine=create_engine('postgresql://postgres:12345@localhost:5432/db2')
 
@@ -23,6 +23,7 @@ def create_app():
     app.register_blueprint(views,url_prefix='/')
     # app.register_blueprint(prod_bp,url_prefix='/prod_bp')
     app.register_blueprint(auth,url_prefix='/')
+    
     
     return app
 

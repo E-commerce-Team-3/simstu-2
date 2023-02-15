@@ -5,11 +5,12 @@
   font-family: 'Roboto', sans-serif;
 }
  
-.container {
+#container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 15px;
   display: flex;
+  margin-bottom: 100px;
 }
 
 .left-column {
@@ -22,7 +23,7 @@ width: 35%;
 margin-top: 60px;
 }
 
-.left-column img {
+/* .left-column img {
 height: 100%;
 position: absolute;
 left: 0;
@@ -35,6 +36,10 @@ margin-top: 100px;
 
 .left-column img.active {
 opacity: 1;
+} */
+
+.imagemain{
+  opacity: 1;
 }
 
 /* Product Description */

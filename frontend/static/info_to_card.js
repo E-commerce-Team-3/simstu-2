@@ -1,73 +1,120 @@
-// function displayProductCards(productDetails) {
-//     productDetails.forEach((product) => {
-//         let productCard = document.createElement("div");
-//         productCard.classList.add("product-card");
+const params = new URLSearchParams(window.location.search);
+const uniqueid = params.get("uniqueid");
+console.log(uniqueid);
 
-//         let productName = document.createElement("div");
-//         productName.innerHTML = product.product_name;
-//         productCard.appendChild(productName);
+window.onload = function() {
+  fetch(`/product/${uniqueid}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      // const prodResults = document.getElementById("prod_results");
+      const container =document.getElementById("container");
+      // prodResults.innerHTML = '';
+      container.innerHTML = '';
+      data.forEach(item => {
+        // const prod = document.createElement("div");
+        // prod.className = "prod";
+      // document.body.appendChild(prod);
+    
+      const leftColumn = document.createElement("div");
+      leftColumn.className = "left-column";
+      container.appendChild(leftColumn);
+    
+      const img = document.createElement("img");
+      // img.setAttribute("data-image", "red");
+      // img.classList.add("active");
+      img.className='imagemain';
+      img.src = item.image;
+      img.onerror = function() {
+        console.error("Failed to load image");
+        this.src = "default-image.png";
+      };
+      console.log(img.src);
+      img.alt = "item.image";
+      // prod.appendChild(img);
+      leftColumn.appendChild(img);
+      // rightColumn.appendChild(img);
 
-//         let productPrice = document.createElement("div");
-//         productPrice.innerHTML = product.price;
-//         productCard.appendChild(productPrice);
+      const rightColumn = document.createElement("div");
+      rightColumn.className = "right-column";
+      container.appendChild(rightColumn);
+    
+      const productDescription = document.createElement("div");
+      productDescription.className = "product-description";
+      rightColumn.appendChild(productDescription);
+    
+      const productDescriptionSpan = document.createElement("span");
+      productDescriptionSpan.innerText = item.category;
+      productDescription.appendChild(productDescriptionSpan);
+    
+      const productDescriptionH1 = document.createElement("h1");
+      productDescriptionH1.innerText = item.name;
+      productDescription.appendChild(productDescriptionH1);
+    
+      const productDescriptionP = document.createElement("p");
+      productDescriptionP.innerText = item.description;
+      productDescription.appendChild(productDescriptionP);
+    
+      const productConfiguration = document.createElement("div");
+      productConfiguration.className = "product-configuration";
+      rightColumn.appendChild(productConfiguration);
+    
+      const productColor = document.createElement("div");
+      productColor.className = "product-color";
+      productConfiguration.appendChild(productColor);
+    
+      const colorSpan = document.createElement("span");
+      colorSpan.innerText = "Color";
+      productColor.appendChild(colorSpan);
+    
+      const colorChoose = document.createElement("div");
+      colorChoose.className = "color-choose";
+      productColor.appendChild(colorChoose);
+    
+      item.color.forEach(color => {
+        const colorButton = document.createElement("button");
+        colorButton.className = "color-button";
+        colorButton.style.backgroundColor = color;
+        colorChoose.appendChild(colorButton);
+      });
+    
+      const cableConfig = document.createElement("div");
+      cableConfig.className = "cable-config";
+      rightColumn.appendChild(cableConfig);
+    
+      const sizeSpan = document.createElement("span");
+      sizeSpan.innerText = "Sizes";
+      cableConfig.appendChild(sizeSpan);
+    
+      const cableChoose = document.createElement("div");
+      cableChoose.className = "cable-choose";
+      cableConfig.appendChild(cableChoose);
+    
+      item.size.forEach(size => {
+        const sizeButton = document.createElement("button");
+        sizeButton.innerText = size;
+        cableChoose.appendChild(sizeButton);
+      });
+    
+      const productPrice = document.createElement("div");
+      productPrice.className = "product-price";
+      rightColumn.appendChild(productPrice);
 
-//         document.getElementById("product-container").appendChild(productCard);
-//     });
-// }
-
-
-
-
-
-
-
-// const submitButton = document.getElementById('submit_button');
-// const searchInput = document.getElementById('query');
-
-// // submitButton.addEventListener('click', function (event) {
-// //     event.preventDefault();
-// //     const query = searchInput.value;
-// //     const rows = "3"
-// //     const endpoint = "https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search"
-// //     fetch(endpoint, {
-// //         method: "GET",
-// //         headers: {
-// //             "Content-Type": "application/json"
-// //         },
-// //         params: { 'q': query, 'rows': rows }
-// //     })
-// //     .then(response => response.json())
-// //     .then(data => {
-// //         const product_ids = [product["uniqueId"] for (product in data["response"]["products"][:10]])
-// //         // send the product_ids to your Python server
-// //         postData('/get_unid', {product_ids: product_ids})
-// //     });
-// // });
-
-// // document.getElementById("searchmain").addEventListener("submit", function(event) {
-// //     event.preventDefault();
-// //     var searchQuery = document.getElementById("query").value;
-// //     fetch(`https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q=${searchQuery}&rows=10`)
-// //         .then(response => response.json())
-// //         .then(data => {
-// //             // Do something with the data here
-// //             console.log(data);
-// //         })
-// //         .catch(error => {
-// //             console.error("Error:", error);
-// //         });
-// //         postData('/get_unid', {data})
-// // });
-
-
-// // async function postData(url = '', data = {}) {
-// //     const res = await fetch(url, {
-// //         method: "POST",
-// //         headers: {
-// //             "Content-Type": "application/json"
-// //         },
-// //         body: JSON.stringify(data)
-// //     });
-// //     return await res.json();
-// // }
+      const price = document.createElement("span");
+      price.textContent = "$" + item.price;
+      productPrice.appendChild(price);
+      
+      const cartButton = document.createElement("a");
+      cartButton.className = "cart-btn";
+      cartButton.href = "#";
+      cartButton.textContent = "Add to cart";
+      productPrice.appendChild(cartButton);
+      
+      // prodResults.appendChild(prod);
   
+  });
+  
+})
+
+.catch(error => console.error(error));
+}

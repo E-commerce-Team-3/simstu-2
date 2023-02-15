@@ -9,7 +9,6 @@ from django.shortcuts import render
 import psycopg2
 from django.conf import settings
 import requests
-import ast
 settings.configure()
 
 
@@ -38,16 +37,24 @@ def home():
     return render_template("base.html",boolean=True)
 
 
+@views.route('/products',methods=["GET","POST"])
+def products():
+    return render_template("products.html",boolean=True)
 
 
-# def get_product_by_uniqueid(uniqueid):
-#     query = select([website_data.price, website_data1.name]).where(website_data.uniqueId == uniqueid)
-#     result = db.session.execute(query).fetchone()
-#     if result:
-#         result=list(result)
-#         return result
-#     else:
-#         pass
+@views.route('/search',methods=["GET","POST"])
+def search():
+    return render_template("search.html",boolean=True)
+
+
+def get_product_by_uniqueid(uniqueid):
+    query = select([website_data2.price, website_data2.name]).where(website_data2.uniqueId == uniqueid)
+    result = db.session.execute(query).fetchone()
+    if result:
+        result=list(result)
+        return result
+    else:
+        pass
 
 
 
@@ -90,12 +97,11 @@ def home():
 
 
 
-@views.route("/search", methods=["GET","POST"])
-def submit_form():
-    # row_count=90 
+@views.route("/search/<query>", methods=["GET","POST"])
+def submit_form(query):
     if request.method != "GET":
         redirect("base.html")
-    query = request.args.get("query")
+    # query = request.args.get("query")
     print('query recieved is ',query)
     if query==None or (len(query))==0 :
         redirect("products.html")
@@ -103,7 +109,7 @@ def submit_form():
         "Content-Type": "application/json",
         "Accept": "application/json"
     }
-    url = f"https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q={query}&rows=90"
+    url = f"https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q={query}&rows=10"
     response = requests.get(url, headers=headers)
     data = response.json()
     global products
@@ -114,33 +120,6 @@ def submit_form():
     pdata= [{"id":product["uniqueId"],"image":product["productImage"],"name": product["title"], "price": product["price"]} for product in products]
     # print(pdata)
     return (pdata)
-
-# @views.route("/search2/<gender>", methods=["GET","POST"])
-# def submit_form2(gender):
-#     if request.method != "GET":
-#         redirect("base.html")
-#     query = request.args.get("query")
-#     print('query recieved is ',query)
-#     print('gender is',gender,type(gender))
-#     if query==None or (len(query))==0 :
-#         redirect("products.html")
-#     headers = {
-#         "Content-Type": "application/json",
-#         "Accept": "application/json"
-#     }
-#     url = f"https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q={query}&rows=10"
-#     response = requests.get(url, headers=headers)
-#     data = response.json()
-#     global products
-#     products = data.get("response", {}).get("products", [])
-#     product_data = []
-#     unique_ids = set()
-#     global pdata
-#     pdata= [{"id":product["uniqueId"],"image":product["productImage"],"name": product["title"], "price": product["price"]}  for product in products if product["gender"]==[gender] ]
-#     # print('data is',pdata)
-#     print(pdata,type(pdata))
-#     return (pdata)
-
 
 @views.route("/search2/<gender>/<query>", methods=["GET","POST"])
 def get_product_by_uniqueid(query,gender):
@@ -169,11 +148,6 @@ def get_product_by_uniqueid(query,gender):
     # #     pass
 
 
-
-
-
-
-# & website_data1.categoryType == query
 
 
 
