@@ -9,6 +9,15 @@ from django.shortcuts import render
 import psycopg2
 from django.conf import settings
 import requests
+import numpy as np
+import pandas as pd
+from .models import website_data2
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
+from sqlalchemy import select
 settings.configure()
 
 
@@ -56,47 +65,6 @@ def get_product_by_uniqueid(uniqueid):
     else:
         pass
 
-
-
-# @views.route('/search',methods=["GET"])
-# def search():
-#     query = request.args.get("query")
-#     if not query:
-#         return jsonify({"error": "Missing 'query' parameter"}), 400
-#     headers = {
-#         "Content-Type": "application/json",
-#          "Accept": "application/json"
-#      }
-#     response = requests.get(f"https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search?q={query}",headers=headers)
-#     if response.status_code != 200:
-#         return jsonify({"error": response.json()}), response.status_code
-#     data = response.json()
-#     unique_ids = set()
-#     products = data.get("response", {}).get("products", [])
-#     product_data = []
-#     unique_ids = set()
-#     for product in products:
-#         product_id = product.get("uniqueId")
-#         if product_id not in unique_ids:
-#             unique_ids.add(product_id)
-#             product_data.append({
-#                 "name": product.get("title"),
-#                 "price": product.get("price")
-#             })
-#         if len(products) == 10:
-#             break
-#             print(products)
-#     return render_template("search.html", products=products)
-
-
-
-
-
-
-
-
-
-
 @views.route("/search/<query>", methods=["GET","POST"])
 def submit_form(query):
     if request.method != "GET":
@@ -126,8 +94,6 @@ def get_product_by_uniqueid(query,gender):
     print(query,gender)
     query = select([website_data2.uniqueId, website_data2.productImage,website_data2.title,website_data2.price]).where(website_data2.catlevel1Name == gender ).where(website_data2.categoryType==query)
     result = db.session.execute(query).fetchall()
-    # if result:
-    result = db.session.execute(query).fetchall() 
     result=list(result)
     data = []
     for row in result:
@@ -137,15 +103,8 @@ def get_product_by_uniqueid(query,gender):
             'name': row[2],
             'price': row[3]
         })
-    # print(data,type(data))
-
-    # result=list(result)
-    # print(result,type(result))
-    # scam=[{'ans':3},{'def':4}]
     return data
-    # # else:
-    # #     print('fucked')
-    # #     pass
+
 
 
 
@@ -165,60 +124,67 @@ def get_desc(uniqueid):
     details=[]
     query = select([website_data2.uniqueId, website_data2.productImage,website_data2.title,website_data2.price,website_data2.color,website_data2.size,website_data2.categoryType,website_data2.productDescription]).where(website_data2.uniqueId == uniqueid )
     result = db.session.execute(query).fetchone()
-    result=list(result)
-    print('result is ', result)
-    print('row 1 is ',result[0])
-    print('row 2 is ',result[1])
-    print('row 3 is ',result[2])
     weed=result[4][1:-1]
     weed_size=result[5][1:-1]
-    # for row in result:
+
     details.append({
             'id': result[0],
             'image': result[1],
             'name': result[2],
             'price': result[3],
             'color': weed.split(','),
-            # "[" +result[4][1:-1] + "]",
             'size': weed_size.split(','),
             'category': result[6],
             'description': result[7]
         })
 
-        # if i["uniqueId"]==uniqueid:
-        #     details=[{"id":i["uniqueId"],"image":i["productImage"],"name": i["title"], "price": i["price"],"color":i["color"],"size":i["size"],"category":i["categoryType"],"description":i["productDescription"]}]
-    print('done')
-    print(details,type(details))
-    # return render_template("products.html",details=details)
     return details
 
 
+def select_name_from_id(product_id):
+    query=select([website_data2.title]).where(website_data2.uniqueId == product_id)
+    product_name = db.session.execute(query).fetchone()
+    return product_name
 
 
+def select_product_details_from_id(product_id):
+    query=select([website_data2.uniqueId, website_data2.productImage,website_data2.title,website_data2.price,website_data2.productDescription]).where(website_data2.uniqueId == product_id)
+    product_id_list = db.session.execute(query).fetchone()
+    print("---------------------******************--------------------")
+    print(product_id_list)
+    return product_id_list
 
 
+@views.route('/recommendation/<uniqueid>')
+def select_recommended_product_list(uniqueid):
+    tf_idf = TfidfVectorizer(stop_words='english')
+    query = select([website_data2.uniqueId, website_data2.name])
+    product_list = list(db.session.execute(query).fetchall())
+    product_df = pd.DataFrame(product_list)
+    name_matrix = tf_idf.fit_transform(product_df['name'])
+    print (name_matrix)
+    similarity_matrix = cosine_similarity(name_matrix, name_matrix)
+    print(similarity_matrix)
+    mapping = pd.Series(product_df.index,index = product_df['name'])
+    print(mapping)
+    print(product_df)
+    product_name = select_name_from_id(uniqueid)
+    product_index = mapping[product_name]
+    similarity_score = list(enumerate(similarity_matrix[product_index][0]))
+    similarity_score = sorted(similarity_score, key=lambda x: x[1], reverse=True)
+    similarity_score = similarity_score[1:5]
+    print(similarity_score)
+    product_indices = [i[0] for i in similarity_score]
+    product_id_list=list(product_df['uniqueId'].iloc[product_indices])
+    print (product_id_list)
+    product_list=list(map(lambda x:select_product_details_from_id(x), product_id_list))
 
-
-
-
-
-
-
-    # uid = request.get_json("data2")
-    # print(name)
+    product_list = [list(product) for product in product_list]
+    print("-------------------------------------")
+    print(product_list)
+    print("-------------------------------------")
+    return {"res": product_list}
     
-    # uid=list(uid)
-    # result=[]
-    # print('uid ',uid,type(uid))
-    # for i in uid:
-    #     #print(i,type(i))
-    #     if(get_product_by_uniqueid(i)) != None:
-    #         result.append(get_product_by_uniqueid(i))
-    # print(type(result))
-    # print(result)
-    # print(type(result[0]))
-    # uniqueid=[[0,1],[1,2]]
-    # return jsonify(uniqueids)
 
     
 

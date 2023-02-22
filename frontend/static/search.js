@@ -9,6 +9,7 @@ window.onload = function() {
     fetch(`/search/${query}`)
     .then(response => response.json())
     .then(data => {
+      console.log(data)
       const results = document.getElementById("products");
       results.innerHTML = "";
       const sortBtn = document.getElementById("sortprice");
@@ -19,17 +20,6 @@ window.onload = function() {
         results.innerHTML = "";
         displayCards(data, 0);
       });
-      // Add a sort button
-      // const sortBtn = document.createElement("button");
-      // sortBtn.innerHTML = "Sort by Price";
-      // sortBtn.className="sortBtn";
-      // sortBtn.addEventListener("click", function() {
-      //   data.sort((a, b) => a.price - b.price);
-      //   results.innerHTML = "";
-      //   displayCards(data, 0);
-      // });
-      // results.appendChild(sortBtn);
-      // Display the cards
       displayCards(data, 0);
     })
     .catch(error => console.error(error));
@@ -42,15 +32,9 @@ console.log(query2);
 if(query2){
 window.onload = function() {
   const array=query2.split("-");
-      // // console.log(array);
-      // // console.log(array[0]);
-      // // console.log(array[1]);
       const query3=array[1];
       const gender=array[0];
-      // // const query="tshirt"
-      // // console.log(query);
       fetch(`/search2/${gender}/${query3}`)
-  // fetch(`/search/${query2}`)
   .then(response => response.json())
   .then(data => {
     const results = document.getElementById("products");
@@ -58,16 +42,12 @@ window.onload = function() {
     globaldata=data;
     // Add a sort button
     const sortBtn = document.getElementById("sortprice");
-    // sortBtn.innerHTML = "Sort by Price";
-    // sortBtn.className="sortBtn";
 
     sortBtn.addEventListener("click", function() {
       data.sort((a, b) => a.price - b.price);
       results.innerHTML = "";
       displayCards(data, 0);
     });
-    // results.appendChild(sortBtn);
-    // Display the cards
     displayCards(data, 0);
   })
   .catch(error => console.error(error));
@@ -82,10 +62,6 @@ function displayCards(data, page) {
     const startIndex = page * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentData = data.slice(startIndex, endIndex);
-    // let currentData = data;
-    // if (sort) {
-    // currentData = data.sort((a, b) => a.price - b.price);
-    // } 
     const results = document.getElementById("products");
     currentData.forEach(item => {
       const card = document.createElement("div");
@@ -114,20 +90,6 @@ function displayCards(data, page) {
     
     const pagination = document.getElementById("pagination");
     pagination.innerHTML="";
-
-//     const leftBtn = document.getElementById("leftbutton");
-//   // leftBtn.innerHTML = "<";
-//   leftBtn.addEventListener("click", function() {
-//   const currentPage = parseInt(document.querySelector('.pagebtn.active').innerHTML) - 1;
-//   if (currentPage > 0) {
-//     results.innerHTML = "";
-//     displayCards(data, currentPage - 1);
-//     document.querySelector(`.pagebtn:nth-child(${currentPage})`).classList.remove('active');
-//     document.querySelector(`.pagebtn:nth-child(${currentPage - 1})`).classList.add('active');
-//   }
-// });
-    // pagination.className="pagination";
-    // results.appendChild(pagination);
     const numPages = Math.ceil(data.length / itemsPerPage);
     for (let i = 0; i < numPages; i++) {
       const btn = document.createElement("button");
@@ -139,38 +101,28 @@ function displayCards(data, page) {
       });
       pagination.appendChild(btn);
     }
-    // const rightBtn = document.getElementById("rightbutton");
-// rightBtn.innerHTML = ">";
-// rightBtn.addEventListener("click", function() {
-//   const currentPage = parseInt(document.querySelector('.pagebtn.active').innerHTML) - 1;
-//   if (currentPage < numPages - 1) {
-//     results.innerHTML = "";
-//     displayCards(data, currentPage + 1);
-//     document.querySelector(`.pagebtn:nth-child(${currentPage + 1})`).classList.remove('active');
-//     document.querySelector(`.pagebtn:nth-child(${currentPage + 2})`).classList.add('active');
-//   }
-// });
   };
 
 
   function displaycard(uniqueid){
-    // window.location.href = `products?uniqueid=${uniqueid}`;
     window.open(`products?uniqueid=${uniqueid}`, '_blank');
+    // fetch(`/recommendation/${uniqueid}`)
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log("Hello......................")
+    //   const results = document.getElementById("products");
+    //   results.innerHTML = "";
+    //   const sortBtn = document.getElementById("sortprice");
+
+      
+    //   sortBtn.addEventListener("click", function() {
+    //     data.sort((a, b) => a.price - b.price);
+    //     results.innerHTML = "";
+    //     displayCards(data, 0);
+    //   });
+    //   displayCards(data, 0);
+    // })
   
   }
 
-  // const select = document.querySelector('#sortby');
-
-// select.addEventListener('change', (event) => {
-//   const sortBy = event.target.value;
-
-//   // Add your sorting logic here based on the value of sortBy
-// });
-
-// const sortBtn = document.getElementById("sortprice");
-// sortBtn.addEventListener("click", function() {
-//   const results = document.getElementById("products");
-//   results.innerHTML = "";
-//   console.log(globaldata);
-//   displayCards(globaldata, 0, true);
-// });
+  

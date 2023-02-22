@@ -6,6 +6,7 @@ window.onload = function() {
   fetch(`/product/${uniqueid}`)
     .then(response => response.json())
     .then(data => {
+      console.log("--------------------")
       console.log(data);
       // const prodResults = document.getElementById("prod_results");
       const container =document.getElementById("container");
@@ -111,10 +112,50 @@ window.onload = function() {
       productPrice.appendChild(cartButton);
       
       // prodResults.appendChild(prod);
+      fetch(`/recommendation/${uniqueid}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data["res"])
+      const results = document.getElementById("products");
+      results.innerHTML = "";
+      displayCards(data["res"]);
+    })
   
   });
   
 })
 
+
 .catch(error => console.error(error));
 }
+
+function displayCards(data) {
+
+  const results = document.getElementById("products");
+  data.forEach(item => {
+    const card = document.createElement("div");
+    card.className="card";
+    card.setAttribute("data-product-id",item[0]);
+    document.body.appendChild(card);
+    card.innerHTML = `
+    <div class="imgBox">
+  <img src="${item[1]}" alt="IMAGE" class="mouse">
+  </div>
+
+  <div class="contentBox">
+  <h3>${item[2]}</h3>
+  <h2 class="price">${item[3]} €</h2>
+  <a class="buy">Buy Now</a>
+  </div>
+
+
+    `;
+    card.addEventListener("click", function() {
+      const uniqueid = this.getAttribute("data-product-id");
+      displaycard(uniqueid);
+    });
+    results.appendChild(card);
+  });
+  
+};
+

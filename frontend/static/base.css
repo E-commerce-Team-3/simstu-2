@@ -165,7 +165,7 @@
   width: 320px;
   height: 480px;
   margin: 80px;
-  background: #191919;
+  /* background: #191919; */
   border-radius: 20px;
   overflow: hidden;
 }
